@@ -1,4 +1,4 @@
-package src.main.java.com.ifpb.employees;
+package com.ifpb.employees;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

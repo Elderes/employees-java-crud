@@ -1,4 +1,4 @@
-package src.main.java.com.ifpb.employees;
+package com.ifpb.employees;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EmployeeCRUD {
+
     public static void insertUser(String name, String email, String date, Double currency) {
-        String sql = "INSERT INTO empregados(nome, email) values (?, ?, ?, ?)";
+        String sql = "INSERT INTO empregados(nome, email, ingresso, salario) values (?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -15,6 +16,8 @@ public class EmployeeCRUD {
             pstmt.setString(2, email);
             pstmt.setString(3, date);
             pstmt.setDouble(4, currency);
+            pstmt.executeUpdate();
+            System.out.println("Empregado adicionado com sucesso.");
         } catch (SQLException e) {
             System.out.println("Erro na adesão: " + e.getMessage());
         }
@@ -49,6 +52,7 @@ public class EmployeeCRUD {
                 pstmt.setString(3, date);
                 pstmt.setDouble(4, currency);
                 pstmt.setInt(5, id);
+                pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Erro na modificação: " + e.getMessage());
         }        
@@ -59,7 +63,7 @@ public class EmployeeCRUD {
 
         try (Connection conn = DatabaseConnection.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setInt(5, id);
+                pstmt.setInt(1, id);
                 pstmt.executeUpdate();
                 System.out.println("Empregado deletado com sucesso.");
         } catch (SQLException e) {
