@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class EmployeeCRUD {
 
-    public static void insertUser(String name, String email, String date, Double currency) {
+    public static void insertEmployee(String name, String email, String date, Double currency) {
         String sql = "INSERT INTO empregados(nome, email, ingresso, salario) values (?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connect();

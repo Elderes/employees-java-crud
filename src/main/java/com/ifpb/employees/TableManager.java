@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class TableManager {
     public static void createTable() throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS empregados ("
-                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "id INTEGER PRIMARY KEY, "
                 + "nome TEXT NOT NULL, "
                 + "email TEXT NOT NULL, "
                 + "ingresso DATE NOT NULL, "
