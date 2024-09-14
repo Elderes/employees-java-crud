@@ -7,15 +7,16 @@ import java.sql.SQLException;
 
 public class EmployeeCRUD {
 
-    public static void insertEmployee(String name, String email, String date, Double currency) {
-        String sql = "INSERT INTO empregados(nome, email, ingresso, salario) values (?, ?, ?, ?)";
+    public static void insertEmployee(String name, String email, String entrance, String role, Double salary) {
+        String sql = "INSERT INTO empregados(nome, email, ingresso, cargo, salario) values (?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setString(2, email);
-            pstmt.setString(3, date);
-            pstmt.setDouble(4, currency);
+            pstmt.setString(3, entrance);
+            pstmt.setString(4, role);
+            pstmt.setDouble(5, salary);
             pstmt.executeUpdate();
             System.out.println("Empregado adicionado com sucesso.");
         } catch (SQLException e) {
@@ -35,6 +36,7 @@ public class EmployeeCRUD {
                                         rs.getString("nome") + "\t" +
                                         rs.getString("email") + "\t" +
                                         rs.getString("ingresso") + "\t" +
+                                        rs.getString("cargo") + "\t" +
                                         rs.getDouble("salario") + "\t");
             }
         } catch (SQLException e) {
@@ -42,17 +44,19 @@ public class EmployeeCRUD {
         }
     }
 
-    public static void updateEmployee(int id, String name, String email, String date, Double currency) {
-        String sql = "UPDATE empregados SET nome = ?, email = ?, ingresso = ?, salario = ? WHERE id = ?";
+    public static void updateEmployee(int id, String name, String email, String entrance, String role, Double salary) {
+        String sql = "UPDATE empregados SET nome = ?, email = ?, ingresso = ?, caro = ?, salario = ? WHERE id = ?";
 
         try (Connection conn = DatabaseConnection.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, name);
-                pstmt.setString(2, email);
-                pstmt.setString(3, date);
-                pstmt.setDouble(4, currency);
-                pstmt.setInt(5, id);
-                pstmt.executeUpdate();
+            pstmt.setString(1, name);
+            pstmt.setString(2, email);
+            pstmt.setString(3, entrance);
+            pstmt.setString(4, role);
+            pstmt.setDouble(5, salary);
+            pstmt.setDouble(6, id);
+            pstmt.executeUpdate();
+            System.out.println("Empregado modificado com sucesso.");
         } catch (SQLException e) {
             System.out.println("Erro na modificação: " + e.getMessage());
         }        
