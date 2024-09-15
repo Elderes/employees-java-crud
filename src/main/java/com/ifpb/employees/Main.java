@@ -1,9 +1,16 @@
 package com.ifpb.employees;
 
 import java.sql.SQLException;
+import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new EmployeeGUI().setVisible(true);
+            }
+        });
+        
         // Cria a tabela
         // TableManager.createTable();
         

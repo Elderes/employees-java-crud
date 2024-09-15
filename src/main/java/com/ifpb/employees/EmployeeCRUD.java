@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class EmployeeCRUD {
 
@@ -24,23 +26,26 @@ public class EmployeeCRUD {
         }
     }
 
-    public static void selectAllEmployees() {
+    public static void selectAllEmployees(DefaultTableModel tableModel) {
         String sql = "SELECT * FROM empregados";
 
         try (Connection conn = DatabaseConnection.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery()) {
 
-                while (rs.next()) {
-                    System.out.println(rs.getInt("id") + "\t" +
-                                        rs.getString("nome") + "\t" +
-                                        rs.getString("email") + "\t" +
-                                        rs.getString("ingresso") + "\t" +
-                                        rs.getString("cargo") + "\t" +
-                                        rs.getDouble("salario") + "\t");
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String email = rs.getString("email");
+                String ingresso = rs.getString("ingresso");
+                String cargo = rs.getString("cargo");
+                double salario = rs.getDouble("salario");
+        
+                // Adicionar linha ao modelo da tabela.
+                tableModel.addRow(new Object[]{id, nome, email, ingresso, cargo, salario});
             }
         } catch (SQLException e) {
-            System.out.println("Erro de consulta: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro de consulta: " + e.getMessage());
         }
     }
 
