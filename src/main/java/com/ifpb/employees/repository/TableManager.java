@@ -1,6 +1,9 @@
-package com.ifpb.employees;
+package com.ifpb.employees.repository;
 
 import java.sql.Statement;
+
+import com.ifpb.employees.DatabaseConnection;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -38,6 +41,9 @@ public class TableManager {
             
             String line;
             while ((line = br.readLine()) != null) {
+                // Remove as vírgulas dos números na linha
+                line = line.replaceAll("(\\d),(\\d)", "$1$2");
+
                 // Adicionar cada linha ao StringBuilder
                 sqlBuilder.append(line);
 

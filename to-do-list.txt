@@ -1,0 +1,2 @@
+Usando o método de migrar os dados antigos, o salário está zerado.Concertar a falta de ascentos.
+Ao clicar em um empregado da lista, fazer com que os dados dele preencham os campos acima.

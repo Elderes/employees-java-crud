@@ -1,26 +1,24 @@
 package com.ifpb.employees;
 
+import com.ifpb.employees.repository.TableManager;
+import com.ifpb.employees.view.EmployeeGUI;
+
 import java.sql.SQLException;
-import javax.swing.*;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new EmployeeGUI().setVisible(true);
-            }
-        });
-        
-        // Cria a tabela
-        // TableManager.createTable();
-        
-        // Adicionar funcionários
-        // EmployeeCRUD.insertEmployee("Fábio", "fabio@meueamil.com", "14/09/2024", "Desenvolvedor", 2234.47);
+    public static void main(String[] args) {
+        try {
+            // Cria a tabela se não existir
+            TableManager.createTable();
+            
+            // Migrar dados antigos (descomente e especifique o caminho do arquivo SQL se necessário)
+            // TableManager.migrateOldData("data.sql");
 
-        // Migrar dados gerados (Especificar o caminho)
-        // TableManager.migrateOldData("data.sql");
+            // Inicia a GUI
+            javax.swing.SwingUtilities.invokeLater(() -> new EmployeeGUI().setVisible(true));
 
-        // Consultar funcionários
-        // EmployeeCRUD.selectAllEmployees();
+        } catch (SQLException e) {
+            System.out.println("Erro ao inicializar o banco de dados: " + e.getMessage());
+        }
     }
 }
