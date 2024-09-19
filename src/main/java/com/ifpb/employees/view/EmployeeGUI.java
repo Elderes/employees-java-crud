@@ -6,12 +6,12 @@ import com.ifpb.employees.controller.EmployeeController;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.sql.SQLException;
 
 public class EmployeeGUI extends JFrame {
 
     private JTextField nameField, emailField, entranceField, roleField, salaryField, idField;
     private JTable resultTable;
+    private JLabel idLabel, nameLabel, emailLabel, entranceLabel, roleLabel, salaryLabel;
     private DefaultTableModel tableModel;
     private EmployeeActionHandler actionHandler;
 
@@ -39,19 +39,29 @@ public class EmployeeGUI extends JFrame {
     public JPanel createFormPanel() {
         JPanel formPanel = new JPanel(new GridLayout(6, 2));
 
+        // Campos de texto
         idField = new JTextField(); 
         nameField = new JTextField(); 
         emailField = new JTextField(); 
         entranceField = new JTextField(); 
         roleField = new JTextField(); 
-        salaryField = new JTextField(); 
-        
-        formPanel.add(idField);
-        formPanel.add(nameField);
-        formPanel.add(emailField);
-        formPanel.add(entranceField);
-        formPanel.add(roleField);
-        formPanel.add(salaryField);
+        salaryField = new JTextField();
+
+        // Rótulos dos campos de texto
+        idLabel = new JLabel("ID: ");
+        nameLabel = new JLabel("Nome: ");
+        emailLabel = new JLabel("Email: ");
+        entranceLabel = new JLabel("Ingresso: ");
+        roleLabel = new JLabel("Cargo: ");
+        salaryLabel = new JLabel("Salário: ");
+
+        // Adicionando rótulo e campo de texto no painel
+        formPanel.add(idLabel); formPanel.add(idField);
+        formPanel.add(nameLabel); formPanel.add(nameField);
+        formPanel.add(emailLabel); formPanel.add(emailField);
+        formPanel.add(entranceLabel); formPanel.add(entranceField);
+        formPanel.add(roleLabel); formPanel.add(roleField);
+        formPanel.add(salaryLabel); formPanel.add(salaryField);
 
         return formPanel;
 
@@ -70,6 +80,7 @@ public class EmployeeGUI extends JFrame {
         buttonPanel.add(updateButton);
         buttonPanel.add(searchButton);
 
+        // Utiliza os métodos da classe EmployeeActionHandler. Encapsula os comandos da interface para desacoplar da lógica de negócios
         insertButton.addActionListener(e -> actionHandler.handleInsert(nameField, emailField, entranceField, roleField, salaryField));
         deleteButton.addActionListener(e -> actionHandler.handleDelete(idField));
         updateButton.addActionListener(e -> actionHandler.handleUpdate(idField, nameField, emailField, entranceField, roleField, salaryField));
