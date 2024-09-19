@@ -16,16 +16,17 @@ public class EmployeeService {
     public void addEmployee(Employee employee) throws SQLException {
         repository.insert(employee);
     }
-
+    
+    public void deleteEmployee(int id) throws SQLException {
+        repository.delete(id);
+    }
+    
+    public void updateEmployee(Employee employee, int id) throws SQLException {
+        repository.update(employee, id);
+    }
+    
     public List<Employee> getAllEmployees() throws SQLException {
         return repository.findAll();
     }
 
-    public void updateEmployee(Employee employee, int id) throws SQLException {
-        repository.update(employee, id);
-    }
-
-    public void deleteEmployee(int id) throws SQLException {
-        repository.delete(id);
-    }
 }
