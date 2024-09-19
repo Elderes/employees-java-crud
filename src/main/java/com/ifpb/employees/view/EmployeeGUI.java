@@ -2,6 +2,10 @@ package com.ifpb.employees.view;
 
 import com.ifpb.employees.controller.EmployeeActionHandler;
 import com.ifpb.employees.controller.EmployeeController;
+import com.ifpb.employees.repository.EmployeeRepository;
+import com.ifpb.employees.repository.EmployeeRepositoryInterface;
+import com.ifpb.employees.service.EmployeeService;
+import com.ifpb.employees.service.EmployeeServiceInterface;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -16,8 +20,12 @@ public class EmployeeGUI extends JFrame {
     private EmployeeActionHandler actionHandler;
 
     public EmployeeGUI() {
-        EmployeeController controller = new EmployeeController();
-        actionHandler = new EmployeeActionHandler(controller);
+        EmployeeRepositoryInterface repository = new EmployeeRepository();
+        EmployeeServiceInterface service = new EmployeeService(repository);
+        EmployeeController controller = new EmployeeController(service);
+
+        tableModel = new DefaultTableModel(new Object[]{"ID", "Nome", "Email", "Ingresso", "Cargo", "Salário"}, 0);
+        actionHandler = new EmployeeActionHandler(controller, tableModel);
 
         setTitle("Sistema de Gerenciamento de Empregados");
         setSize(600, 620);
@@ -91,7 +99,6 @@ public class EmployeeGUI extends JFrame {
     
     public JScrollPane createTableScroll() {
         resultTable = new JTable();
-        tableModel = new DefaultTableModel(new Object[]{"ID", "Nome", "Email", "Ingresso", "Cargo", "Salário"}, 0);
         resultTable.setModel(tableModel);
         return new JScrollPane(resultTable);
     }

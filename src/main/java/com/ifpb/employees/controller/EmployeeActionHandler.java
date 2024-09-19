@@ -8,9 +8,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class EmployeeActionHandler {
     private EmployeeController controller;
+    private DefaultTableModel tableModel;
 
-    public EmployeeActionHandler(EmployeeController controller) {
+    public EmployeeActionHandler(EmployeeController controller, DefaultTableModel tableModel) {
         this.controller = controller;
+        this.tableModel = tableModel;
     }
 
     public void handleInsert(JTextField nameField, JTextField emailField, JTextField entranceField, JTextField roleField, JTextField salaryField) {
@@ -22,20 +24,23 @@ public class EmployeeActionHandler {
                 roleField.getText(),
                 Double.parseDouble(salaryField.getText())
             );
+            refreshTable();
             JOptionPane.showMessageDialog(null, "Empregado adicionado com sucesso.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     
+    
     public void handleDelete(JTextField idField) {
         try {
             controller.deleteEmployee(
                 Integer.parseInt(idField.getText())
-            );
-            JOptionPane.showMessageDialog(null, "Empregado deletado com sucesso.");
-        } catch (SQLException e) {
-            e.printStackTrace();
+                );
+                refreshTable();
+                JOptionPane.showMessageDialog(null, "Empregado deletado com sucesso.");
+            } catch (SQLException e) {
+                e.printStackTrace();
         }
     }
     
@@ -48,19 +53,31 @@ public class EmployeeActionHandler {
                 entranceField.getText(),
                 roleField.getText(),
                 Double.parseDouble(salaryField.getText())
-            );
-            JOptionPane.showMessageDialog(null, "Empregado atualizado com sucesso.");
-        } catch (SQLException e) {
-            e.printStackTrace();
+                );
+                refreshTable();
+                JOptionPane.showMessageDialog(null, "Empregado atualizado com sucesso.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-    }
-
-    public void handleSearch(DefaultTableModel tableModel) {
-        try {
+        
+        public void handleSearch(DefaultTableModel tableModel) {
+            try {
+                tableModel.setRowCount(0);
+                controller.populateTable(tableModel);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        private void refreshTable() {
             tableModel.setRowCount(0);
-            controller.populateTable(tableModel);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                controller.populateTable(tableModel);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Erro ao consultar empregados." + e.getMessage());
+            }
         }
     }
-}
+    
